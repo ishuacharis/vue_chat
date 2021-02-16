@@ -1,0 +1,19 @@
+.chats {
+    display: flex;
+    flex-direction: column;
+    /* overflow: hidden; */
+    max-width: 30rem;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+    border: 1px solid red;
+}
+.contact {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+.contact-avatar{
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    border: 1px solid #000;
+}

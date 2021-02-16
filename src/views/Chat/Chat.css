@@ -6,27 +6,25 @@
     margin: 0 auto;
     border-radius: 0.5rem;
     border: 1px solid red;
-    
 }
 .chat__header {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 10% 90%;
     background-color: #eee;
-    align-items: start;
-    justify-items: start;
+    cursor: pointer;
 }
 
 .right{
     display: flex;
     justify-content: space-between;
 }
+.right-left{
+    display: flex;
+}
 .right .bx-video {
     margin-right: 1.5rem;
 }
-.middle {
-    display: flex;
-    align-items: center;
-}
+
 .chat__header-avatar{
     width: 2.5rem;
     height: 2.5rem;

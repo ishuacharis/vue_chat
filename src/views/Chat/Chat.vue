@@ -1,49 +1,33 @@
 <template>
      <div class="chat">
           <div class="chat__header">
-               <div class="left">
+               <div @click ="backToChats" class="left">
                     <i class='bx bx-chevron-left'></i>
                </div>
-               <div class="middle">
-                    <div class="chat__header-avatar">
-                         <img alt="Vue logo" src="../../assets/logo.png">
-                    </div>
-                    <div class="chat__header-user">
-                         <span class="name">Oluwashla bridget</span>
-                         <span class="status">online</span>
-                    </div>
-               </div>
                <div class="right">
-                    <i class='bx bx-video'></i>
-                    <i class='bx bxs-phone'></i>
+                    <div class="right-left">
+                         <div class="chat__header-avatar">
+                              <img alt="Vue logo" src="../../assets/logo.png">
+                         </div>
+                         <div class="chat__header-user">
+                              <span class="name">Oluwashola bridget</span>
+                              <span class="status">online</span>
+                         </div>
+                    </div>
+                    <div class="right">
+                         <i class='bx bx-video'></i>
+                         <i class='bx bxs-phone'></i>
+                    </div>
                </div>
           </div>
           <div class="chat__feeds">
-               <div class="feed">     
-                    <p class="text">
-                         Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic
-                         corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!
-                    </p>
-               </div>
-               <div class="feed right">     
-                    <p class="text">
-                         Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic
-                         corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!
-                    </p>
-               </div>
-               <div class="feed">     
-                    <p class="text">
-                         Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic
-                         corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!
-                    </p>
-               </div>
-               <div class="feed right">     
-                    <p class="text">
-                         Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic
-                         corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!
-                    </p>
-               </div>
-               
+               <template  v-for="(feed, i) in feeds" :key="i">
+                    <div class="feed" :class="{ 'right' : isEven(i)  }">     
+                         <p class="text">
+                              {{ feed.text }}
+                         </p>
+                    </div>
+               </template>               
           </div>
           <div class="chat__form-message">
                <input type="text" name="" id="">
@@ -53,6 +37,9 @@
 
 <script>
     import socket from '@/socket.js';
+    import { useRouter } from 'vue-router';
+    import { reactive } from 'vue';
+
     export default {
         name: 'Chat',
         components: {
@@ -60,29 +47,55 @@
         },
 
         setup() {   
-            socket.on('connect', () => {
-                console.log(`socket connected ${socket.connected}`)
-                console.log(`connected ${socket.id}`)
-                
-            })
-            
-            socket.on('disconnect', () => {
-                console.log(`socket connected ${socket.connected}`)
-                console.log(`disconnected ${socket.id }`)
-            })
-            socket.on('isconnected',function(data) {
-                console.log(`thank you servers  ${data.connected}`)
+          
+          const feeds =  reactive([
+               {
+                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
+               },
+               {
+                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
+               },
+               {
+                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
+               },
+               {
+                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
+               },
+               {
+                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
+               }
+          ])
+          
+          const router = useRouter();
+          
 
-                socket.emit('typing', {isTyping: "yes"},
-                    (response) => {
-                         console.log(response.status)
-                    }
-                )       
-            })
+          socket.on('connect', () => {
+               console.log(`socket connected ${socket.connected}`)
+               console.log(`connected ${socket.id}`)
+               
+          })
+          
+          socket.on('disconnect', () => {
+               console.log(`socket connected ${socket.connected}`)
+               console.log(`disconnected ${socket.id }`)
+          })
+          socket.on('isconnected',function(data) {
+               console.log(`thank you servers  ${data.connected}`)
 
-            socket.on('hello', (data) => {
-                console.log(`connected ${data}`)
-            })
+               socket.emit('typing', {isTyping: "yes"},
+               (response) => {
+                    console.log(response.status)
+               }
+               )       
+          })
+
+          socket.on('hello', (data) => {
+               console.log(`connected ${data}`)
+          })
+
+          const backToChats = () => {
+               router.replace("/chats")
+          }
 
             // window.addEventpstener('beforeunload', function(e) {
             //   console.log(e)
@@ -99,11 +112,17 @@
                 
                 
                 
-            // })     
+            // })
+            const isEven = (x) => {
+                 return x % 2 ? true : false
+            } 
+            return {
+               backToChats,feeds, isEven
+          }
             
-        }
+     }
         
-        }
+}
 
 </script>
 

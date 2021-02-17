@@ -11,7 +11,7 @@
                          </div>
                          <div class="chat__header-user">
                               <span class="name">Oluwashola bridget</span>
-                              <span class="status">online</span>
+                              <span class="status">{{ status.status }}</span>
                          </div>
                     </div>
                     <div class="right">
@@ -30,7 +30,7 @@
                </template>               
           </div>
           <div class="chat__form-message">
-               <input type="text" name="" id="">
+               <input type="text" name="" id="" @keyup="typing">
           </div>
      </div>
 </template>
@@ -38,7 +38,7 @@
 <script>
     import socket from '@/socket.js';
     import { useRouter } from 'vue-router';
-    import { reactive } from 'vue';
+    import { reactive, onMounted, } from 'vue';
 
     export default {
         name: 'Chat',
@@ -66,58 +66,70 @@
                }
           ])
           
+          const status = reactive({status: 'online'})
           const router = useRouter();
           
 
           socket.on('connect', () => {
                console.log(`socket connected ${socket.connected}`)
-               console.log(`connected ${socket.id}`)
-               
+               console.log(`connected ${socket.id}`)      
           })
           
           socket.on('disconnect', () => {
                console.log(`socket connected ${socket.connected}`)
                console.log(`disconnected ${socket.id }`)
           })
-          socket.on('isconnected',function(data) {
-               console.log(`thank you servers  ${data.connected}`)
 
-               socket.emit('typing', {isTyping: "yes"},
-               (response) => {
-                    console.log(response.status)
-               }
-               )       
-          })
-
+          
           socket.on('hello', (data) => {
                console.log(`connected ${data}`)
           })
+
+          socket.on ('user_typing', ({ user, typers }) => {
+               status.status =  typers > 0 ? `${user} isTyping...` : 'online'
+              
+          })
+
+          // socket.emit('typing', {isTyping: "yes"},
+          //      (response) => {
+          //           console.log(response.status)
+          //      }
+          // ) 
+
+          const typing  = () => {
+               
+               socket.emit("user_typing")
+          }
+
+          // window.addEventListener("beforeunload", function (e) {
+          //      var confirmationMessage = " ";
+
+          //      (e || window.event).returnValue = confirmationMessage;
+          //      console.log("wahahahahahha") //Gecko + IE
+          //      return confirmationMessage;                            //Webkit, Safari, Chrome
+          // });
+
+          onMounted(() => {
+               const username = window.prompt('Enter your name', 'Olawale')
+               if(username) {
+                    socket.emit('new_user', { username: username })
+               }
+          })
+         
+
+
+
 
           const backToChats = () => {
                router.replace("/chats")
           }
 
-            // window.addEventpstener('beforeunload', function(e) {
-            //   console.log(e)
-            //   alert("hellow")
-            // })
 
-
-            // if(leaving.isLeaving){
-                
-            //     alert("you are about to leave")
-            //   }
-
-            // onBeforeUnmount(() => {
-                
-                
-                
-            // })
-            const isEven = (x) => {
-                 return x % 2 ? true : false
-            } 
-            return {
-               backToChats,feeds, isEven
+          const isEven = (x) => {
+               return x % 2 ? true : false
+          } 
+          return {
+               backToChats,feeds, isEven, typing, status
           }
             
      }

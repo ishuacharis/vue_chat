@@ -30,7 +30,17 @@
                </template>               
           </div>
           <div class="chat__form-message">
-               <input type="text" name="" id="" @keyup="notTyping" @keydown="typing">
+               <div class="attach">
+                    <i class='bx bx-plus'></i>
+               </div>
+               <div class="text-field">
+                    <input type="text" name="" id="" @keyup="notTyping" @keydown="typing">
+               </div>
+               <div class="other">
+                    <span><i class='bx bxs-camera'></i></span>
+                    <span><i class='bx bxs-microphone'></i></span>
+                    <!-- <span><i class='bx bx-send'></i></span> -->
+               </div>
           </div>
      </div>
 </template>
@@ -127,10 +137,10 @@
         
 
           onMounted(() => {
-               const username = window.prompt('Enter your name', 'Olawale')
-               if(username) {
-                    socket.emit('new_user', { username: username })
-               }
+               // const username = window.prompt('Enter your name', 'Olawale')
+               // if(username) {
+               //      socket.emit('new_user', { username: username })
+               // }
           })
          
 

@@ -30,7 +30,7 @@
                </template>               
           </div>
           <div class="chat__form-message">
-               <input type="text" name="" id="" @keyup="typing">
+               <input type="text" name="" id="" @keyup="notTyping" @keydown="typing">
           </div>
      </div>
 </template>
@@ -47,7 +47,8 @@
         },
 
         setup() {   
-          
+          let timer,
+               timeoutValue = 5000;
           const feeds =  reactive([
                {
                     text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
@@ -67,14 +68,16 @@
           ])
           
           const status = reactive({status: 'online'})
+          
           const router = useRouter();
           
-
+          //socket is connected
           socket.on('connect', () => {
                console.log(`socket connected ${socket.connected}`)
                console.log(`connected ${socket.id}`)      
           })
           
+          //socket is disconnected
           socket.on('disconnect', () => {
                console.log(`socket connected ${socket.connected}`)
                console.log(`disconnected ${socket.id }`)
@@ -85,29 +88,43 @@
                console.log(`connected ${data}`)
           })
 
+          //user is typing
           socket.on ('user_typing', ({ user, typers }) => {
                status.status =  typers > 0 ? `${user} isTyping...` : 'online'
               
           })
 
+          //user stopped typing 
+          socket.on('user_stopped_typing', (typers) => {
+
+               if(!typers) {
+                    status.status = 'online'
+               }
+          })
           // socket.emit('typing', {isTyping: "yes"},
           //      (response) => {
           //           console.log(response.status)
           //      }
           // ) 
 
-          const typing  = () => {
+          const typing  = (e) => {
                
-               socket.emit("user_typing")
+               clearTimeout(timer)
+               socket.emit("user_typing", {typing: e.target.value})
+
+               if(e.target.value === '') {
+                    socket.emit('user_stopped_typing')
+               }
           }
 
-          // window.addEventListener("beforeunload", function (e) {
-          //      var confirmationMessage = " ";
+          const notTyping = () => {             
+               clearTimeout(timer)
+               timer = setTimeout(() => {
+                    socket.emit('user_stopped_typing')
+               }, timeoutValue);
+          }
 
-          //      (e || window.event).returnValue = confirmationMessage;
-          //      console.log("wahahahahahha") //Gecko + IE
-          //      return confirmationMessage;                            //Webkit, Safari, Chrome
-          // });
+        
 
           onMounted(() => {
                const username = window.prompt('Enter your name', 'Olawale')
@@ -129,7 +146,7 @@
                return x % 2 ? true : false
           } 
           return {
-               backToChats,feeds, isEven, typing, status
+               backToChats,feeds, isEven, typing, status, notTyping
           }
             
      }

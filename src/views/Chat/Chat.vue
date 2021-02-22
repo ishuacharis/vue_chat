@@ -1,5 +1,5 @@
 <template>
-     <div class="chat">
+     <div class="chat-container chat">
           <div class="chat__header">
                <div @click ="backToChats" class="left">
                     <i class='bx bx-chevron-left'></i>

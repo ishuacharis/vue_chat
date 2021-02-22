@@ -1,12 +1,7 @@
 .chat{
-    display: flex;
-    flex-direction: column;
-    /* overflow: hidden; */
-    max-width: 30rem;
-    margin: 0 auto;
-    border-radius: 0.5rem;
-    border: 1px solid red;
+   background-color: rosybrown;
 }
+
 .chat__header {
     display: grid;
     grid-template-columns: 10% 90%;
@@ -51,7 +46,7 @@
     font-size: 1rem;
 }
 .chat__feeds{
-    height: 500px;
+    height: 50rem;
     overflow-y: scroll;
     padding: 0.2rem;
 }

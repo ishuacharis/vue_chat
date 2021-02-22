@@ -9,11 +9,13 @@ const routes = [
         component: HelloWorld
     },
     {
-        path: "/chat",
+        path: "/chat/:username",
+        name: "chat",
         component: Chat
     },
     {
         path: "/chats",
+        name: "chats",
         component: Chats
     }
 ]

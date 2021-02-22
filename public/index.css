@@ -34,3 +34,13 @@ img {
     object-fit: cover;
     border-radius: inherit;
 }
+.container {
+    max-width: 30rem;
+    margin: 0 auto;
+}
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    /* overflow: hidden; */
+    border-radius: 0.5rem;
+}

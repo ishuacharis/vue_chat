@@ -21,7 +21,7 @@
                </div>
           </div>
           <div class="chat__feeds">
-               <template  v-for="(feed, i) in feeds" :key="i">
+               <template  v-for="(feed, i) in FEEDS" :key="i">
                     <div class="feed" :class="{ 'right' : isEven(i)  }">     
                          <p class="text">
                               {{ feed.text }}
@@ -47,8 +47,9 @@
 
 <script>
     import socket from '@/socket.js';
-    import { useRouter } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import { reactive, onMounted, } from 'vue';
+    import { FEEDS } from '@/data/feeds';
 
     export default {
         name: 'Chat',
@@ -59,27 +60,17 @@
         setup() {   
           let timer,
                timeoutValue = 5000;
-          const feeds =  reactive([
-               {
-                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
-               },
-               {
-                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
-               },
-               {
-                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
-               },
-               {
-                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
-               },
-               {
-                    text: "Lorem ipsum dolor sit amet consectetur, adipisicing ept. Ipsa, obcaecati nesciunt tempore amet corporis error illum hic corrupti placeat debitis expedita odit praesentium, ducimus recusandae voluptatem perspiciatis culpa? Dolorum, molestiae!"
-               }
-          ])
+          
           
           const status = reactive({status: 'online'})
           
           const router = useRouter();
+          window.route = useRoute();
+          //const {params:{username}} =  useRoute();
+          
+          // const getUser  = async () => {
+
+          // }
           
           //socket is connected
           socket.on('connect', () => {
@@ -156,7 +147,7 @@
                return x % 2 ? true : false
           } 
           return {
-               backToChats,feeds, isEven, typing, status, notTyping
+               backToChats,FEEDS, isEven, typing, status, notTyping
           }
             
      }

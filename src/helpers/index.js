@@ -1,11 +1,9 @@
-import store from "../store"
 
-
-export const isAuthenticated = () => {    
-    return store.getters['auth/isAuthenticaed'] || false;
+export const isAuthenticated = () => {   
+    return JSON.parse(localStorage.getItem("VUE_CHAT_USER"))
 };
 
 export const getToken = () => {
     
-    return store.getters['auth/token'] ;
+    return JSON.parse(localStorage.getItem("VUE_CHAT_USER"));
 }

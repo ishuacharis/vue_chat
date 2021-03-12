@@ -1,5 +1,14 @@
 <template>
-  <router-view/>
+  <!-- <transition>
+    <router-view/>
+  </transition> -->
+  <div class="container">
+    <router-view v-slot="{ Component }">
+      <transition name="slide">
+          <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
 </template>
 
 <script>

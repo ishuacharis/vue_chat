@@ -19,7 +19,15 @@ i {
 input{
     width: 100%;
     height: 2.5rem;
-    border-radius: 15px;
+    padding: 0.8rem;
+    font-size: 2rem;
+    color: rgb(63, 61, 61);
+    font-weight: 400;
+    border: 1px solid #ccc;
+    outline: none;
+}
+textarea{
+    width: 100%;
     padding: 0.8rem;
     font-size: 2rem;
     color: rgb(63, 61, 61);

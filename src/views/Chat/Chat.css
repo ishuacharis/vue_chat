@@ -76,7 +76,9 @@
 }
 .text-field{
     margin-right: 1rem;
-    
+}
+.text-field input {
+    border-radius: 15px;
 }
 .other{
     display: flex;

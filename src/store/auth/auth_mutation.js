@@ -1,7 +1,8 @@
 
 export const authMutation = {
-    authenticate(state,paylod){
-        state.user = paylod.credentials.user,
-        state.token = paylod.crentials.token
+    authenticate(state,payload){
+        console.log(payload)
+        state.user = payload.user,
+        state.token = payload.token
     }
 }

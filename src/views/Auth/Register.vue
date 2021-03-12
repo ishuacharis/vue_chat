@@ -34,19 +34,49 @@
 
 <script>
     import { ref , computed } from 'vue';
+    import { useRouter } from 'vue-router';
     import {provideWrapper} from '@/provideInject';
     import { validationSchema } from '@/schema';
     import FormStep from '@/components/FormStep.vue';
     import FormWizard from '@/components/FormWizard.vue';
     import { Field, ErrorMessage } from 'vee-validate';
+    import { register } from '@/routes';
+    import { useStore } from 'vuex';
+    import { auth } from '@/store/auth/actions/action_creators';
+
     export default {
         name: 'Register',
         components: {FormStep, FormWizard,Field,ErrorMessage},
         setup() {
             const currentStepIdx = ref(0);
             const stepCounter =  ref(0);
-            const onSubmit = (formData) => {
-                console.log(formData)
+            const router  = useRouter();
+            const store  = useStore();
+            const onSubmit = async (formData) => {
+                const data = {
+                    username: formData.displayName,
+                    phone_no: formData.phoneNo,
+                    about: formData.about
+                }
+                const args = {
+                    endPoint: "register",
+                    method: "POST",
+                    body: data
+                }
+                try {
+                    
+                    const {user, token}  = await register(args);
+                    console.log(user)
+                    if(user && token){
+                        localStorage.setItem("VUE_CHAT_USER", JSON.stringify(user));
+                        localStorage.setItem("VUE_CHAT_TOKEN", JSON.stringify(token));
+                        store.dispatch(auth({user,token}));
+                        router.replace("/chats");
+                    }
+                    
+                } catch (e) {
+                    console.log(e.message)
+                }
             }
 
             const updateCounter = () => {

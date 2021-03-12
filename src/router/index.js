@@ -3,6 +3,8 @@ const Chat = () => import("@/views/Chat/Chat.vue") ;
 const Chats = () => import("@/views/Chats/Chats.vue") ;
 const HelloWorld = () => import('@/components/HelloWorld.vue');
 const Register  = () => import('@/views/Auth/Register.vue');
+import {authGuard} from './guard';
+
 const routes = [
     {
         path: "/",
@@ -11,11 +13,15 @@ const routes = [
     {
         path: "/chat/:username",
         name: "chat",
+        meta: {requiresAuth: true},
+        beforeEnter: authGuard,
         component: Chat
     },
     {
         path: "/chats",
         name: "chats",
+        meta: {requiresAuth: true},
+        beforeEnter: authGuard,
         component: Chats
     },
     {

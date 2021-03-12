@@ -35,7 +35,8 @@
 <script>
     import { ref , computed } from 'vue';
     import {provideWrapper} from '@/provideInject';
-    import * as yup from 'yup';
+    //import * as yup from 'yup';
+    import { validationSchema } from '@/schema';
     import FormStep from '@/components/FormStep.vue';
     import FormWizard from '@/components/FormWizard.vue';
     import { Field, ErrorMessage } from 'vee-validate';
@@ -46,11 +47,11 @@
             const currentStepIdx = ref(0);
             const stepCounter =  ref(0);
             
-            const validationSchema = yup.object().shape({
-                phoneNo: yup.string().required().label('Phone no'),
-                displayName: yup.string().required().label('Display name'),
-                about: yup.string().required().label('About me')
-            });
+            // const validationSchema = yup.object().shape({
+            //     phoneNo: yup.string().required().label('Phone no'),
+            //     displayName: yup.string().required().label('Display name'),
+            //     about: yup.string().required().label('About me')
+            // });
             const onSubmit = (formData) => {
                 console.log(formData)
             }

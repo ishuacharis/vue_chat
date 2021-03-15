@@ -6,3 +6,7 @@ export const validationSchema = yup.object().shape({
     displayName: yup.string().required().label('Display name'),
     about: yup.string().required().label('About me')
 });
+
+export const addUserSchema = yup.object().shape({
+    phoneNo: yup.string().required().label('Phone no'),
+});

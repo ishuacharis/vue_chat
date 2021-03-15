@@ -34,3 +34,7 @@ const connect = async (args) => {
 export const register = async (args) => {
     return await connect(args);
 }
+
+export const addUser = async (args) => {
+    return await connect(args);
+}

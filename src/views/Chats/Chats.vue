@@ -1,8 +1,24 @@
 <template>
     <div class="chat-container chats">
+        <div class="header">
+            <div class="small avatar">
+                <img alt="Vue logo" src="../../assets/logo.png">
+            </div>
+            <ul class="header-nav">
+                <li>
+                    <a href="#">Add Contact</a>
+                </li>
+                <li>
+                    <a href="#">Setting</a>
+                </li>
+                <li>
+                    <a href="#">Profile</a>
+                </li>
+            </ul>
+        </div>
         <div class="content">
             <div @click="navigateToChat(chat.name)" class="contact" v-for="chat in CHATS" :key="chat.name">
-                <div class="contact-avatar">
+                <div class="large avatar">
                     <img alt="Vue logo" src="../../assets/logo.png">
                 </div>
                 <div class="contact-info">

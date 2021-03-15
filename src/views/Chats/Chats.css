@@ -1,5 +1,17 @@
 .chats {
    border: 1px solid red;
+   padding: 0 0.8rem;
+}
+.header{
+    margin-bottom:  0.8rem;
+    background-color: gray;
+}
+.header img {
+    cursor: pointer;
+}
+.header-nav{
+    display: none;
+    visibility: hidden;
 }
 .content{
     max-height: 50rem;
@@ -7,13 +19,18 @@
 .contact {
     display: grid;
     grid-template-columns: 1fr auto;
-    padding: 0.8rem;
     background-color: #fff;
     cursor: pointer;
 }
-.contact-avatar{
+.small{
+    width: 2rem;
+    height: 2rem;
+}
+.large{
     width: 4rem;
     height: 4rem;
+}
+.avatar{
     border-radius: 50%;
     border: 1px solid #000;
 }

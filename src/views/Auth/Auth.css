@@ -23,14 +23,3 @@
     text-align: right;
     font-size: 1.5rem;
 }
-.button{
-    margin-top: 2rem;
-}
-.btn {
-    padding: 0.5rem 2.5rem;
-    outline: none;
-    border: 1px solid #eee;
-}
-.btn-secondary{
-    background-color: lawngreen;
-}

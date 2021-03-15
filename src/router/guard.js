@@ -7,12 +7,31 @@ export const authGuard = (to,from,next) => {
 
             next({
                 path: "/register"
-            })
+            });
 
         }else{
             next();
         }
     }else{
-        next()
+        next();
+    }
+}
+
+export const guestGuard = (to,from, next) => {
+    if(to.matched.some(record => record.meta.guest)) {
+
+
+        if(isAuthenticated()) {
+            next({
+                path: "/chats"
+            });
+        }else{
+            next();
+        }
+
+    }
+
+    else{
+        next();
     }
 }

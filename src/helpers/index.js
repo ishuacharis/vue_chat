@@ -1,6 +1,6 @@
 
 export const isAuthenticated = () => {   
-    return JSON.parse(localStorage.getItem("VUE_CHAT_USER"))
+    return JSON.parse(localStorage.getItem("VUE_CHAT_USER")) ? true: false
 };
 
 export const getToken = () => {
@@ -9,5 +9,5 @@ export const getToken = () => {
 }
 
 export const getUser = () => {
-    return JSON.parse(localStorage.getItem("VUE_CHAT_USER"))._id;
+    return JSON.parse(localStorage.getItem("VUE_CHAT_USER"));
 }

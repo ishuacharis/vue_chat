@@ -25,7 +25,7 @@ export default {
 
     setup() {
         const router = useRouter();
-        const user  = getUser();
+        const user  = getUser()._id;
         const handleSubmit = async (values, {resetForm}) => {
             const data = {
                 username: values.phoneNo,

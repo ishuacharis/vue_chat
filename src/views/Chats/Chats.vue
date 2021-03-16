@@ -17,7 +17,7 @@
             </ul>
         </div>
         <div class="content">
-            <div @click="navigateToChat(chat.name)" class="contact" v-for="chat in CHATS" :key="chat.name">
+            <div @click="navigateToChat(chat.username)" class="contact" v-for="(chat,i) in friendList" :key="i">
                 <div class="large avatar">
                     <img alt="Vue logo" src="../../assets/logo.png">
                 </div>
@@ -25,14 +25,15 @@
                     <div class="chat-preview">
                         <div class="chat-single">
                             <span class="contact-name">
-                                {{ chat.name }}
+                                {{ chat.username }}
                             </span>
                             <span class="chat-date">
-                                {{ chat.date }}
+                                {{ chat.created_at.toLocaleString() }}
                             </span>
                         </div>
                         <span class="text">
-                            {{ chat.text }} 
+                            Lorem ipsum dolor sit amet consectetur 
+                            adipisicing elit. Reprehenderit quis eligendi
                         </span>
                     </div>
                 </div>
@@ -43,16 +44,32 @@
 </template>
 
 <script>
-    import { CHATS } from '@/data/chats';
-    import { useRouter,  } from 'vue-router'
+    import { onMounted,ref } from 'vue';
+    //import { CHATS } from '@/data/chats';
+    import { useRouter,  } from 'vue-router';
+    import { getFriends } from '@/routes';
+    import { getUser } from '@/helpers';
+
     export default {
         name: 'Chats',
 
         setup() {
-            
+            const user = getUser();
+            console.log(user.phoneNo)
             const router = useRouter();
-            
-            window.router = useRouter()
+            const friendList  = ref([]);
+            const args = {
+                endPoint: "friends",
+                method: "POST",
+                body: {
+                    user: user.phoneNo
+                }
+            }
+            const contacts =  async () => {
+                const {  friends }  = await getFriends(args);
+                friendList.value = friends
+            }
+
             const navigateToChat = (username) => {
                 router.push({
                     name: "chat",
@@ -60,8 +77,12 @@
                 })
             }
 
+            onMounted(() => {
+                contacts()
+            })
+
             return {
-                navigateToChat, CHATS
+                navigateToChat, contacts, friendList
             }
         }   
     }

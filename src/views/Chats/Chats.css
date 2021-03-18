@@ -21,6 +21,7 @@
     grid-template-columns: 1fr auto;
     background-color: #fff;
     cursor: pointer;
+    padding: 0.25rem 0;
 }
 .small{
     width: 2rem;

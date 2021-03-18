@@ -28,12 +28,11 @@
                                 {{ chat.username }}
                             </span>
                             <span class="chat-date">
-                                {{ chat.created_at.toLocaleString() }}
+                                {{ timeAgo(chat.created_at)  }}
                             </span>
                         </div>
                         <span class="text">
-                            Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Reprehenderit quis eligendi
+                            Lorem ipsum dolor sit amet consectetur
                         </span>
                     </div>
                 </div>
@@ -49,6 +48,7 @@
     import { useRouter,  } from 'vue-router';
     import { getFriends } from '@/routes';
     import { getUser } from '@/helpers';
+    import { timeAgo } from "@/helpers/duration_helper"
 
     export default {
         name: 'Chats',
@@ -82,7 +82,7 @@
             })
 
             return {
-                navigateToChat, contacts, friendList
+                navigateToChat, contacts, friendList, timeAgo
             }
         }   
     }
